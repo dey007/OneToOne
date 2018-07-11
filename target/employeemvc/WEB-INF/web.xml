@@ -1,0 +1,16 @@
+<web-app> 
+  <servlet>
+  	<servlet-name>myBeans</servlet-name>
+  	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>myBeans</servlet-name>
+  	<url-pattern>/*</url-pattern>
+  </servlet-mapping>
+
+  <welcome-file-list>
+  	<welcome-file>/WEB-INF/pages/index.jsp</welcome-file>
+  </welcome-file-list>
+  
+</web-app>
