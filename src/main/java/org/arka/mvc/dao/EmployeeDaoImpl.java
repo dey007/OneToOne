@@ -1,7 +1,10 @@
 package org.arka.mvc.dao;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
+import org.arka.mvc.bean.Address;
 import org.arka.mvc.bean.Employee;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -28,24 +31,31 @@ public class EmployeeDaoImpl implements EmployeeDao{
 
 	@Transactional
 	public List<Employee> findAllByAge(int age) {
+		List emp=new ArrayList();
 		System.out.println("DAO:"+age);
-		String query="from org.arka.mvc.bean.Employee as e where e.age=:age";
+		//String query="from org.arka.mvc.bean.Employee as e where e.age=:age";
+		String query="select e.empId,e.empName,a.hno from org.arka.mvc.bean.Employee as e inner join e.address as a where e.age=:age";
 		Session session=sessionFactory.getCurrentSession();
 		Query q=session.createQuery(query);
 		q.setInteger("age", age);
 		@SuppressWarnings("unchecked")
-		List<Employee> list=q.list();
+		List<Object[]> list=q.list();
 		System.out.println(list.toArray());
-		return list;
+		
+		Iterator itr=list.iterator();
+		while(itr.hasNext()){
+			Object obj=itr.next();
+			emp.add(obj);
+		}
+		return emp;
 	}
 
 	@Override
 	@Transactional
 	public int insert(Employee emp) {
 		Session session=sessionFactory.getCurrentSession();
-		//System.out.println(emp.getAge()+" "+emp.getEmpId()+" "+emp.getEmpName());
-		session.persist(emp);
-		//System.out.println(emp.getAge()+" "+emp.getEmpId()+" "+emp.getEmpName());
-		return emp.getEmpId();
+		int i=(int) session.save(emp);
+		System.out.println(i);
+		return i;
 	}
 }

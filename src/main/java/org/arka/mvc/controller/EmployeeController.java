@@ -39,7 +39,8 @@ public class EmployeeController {
 	@RequestMapping(value="/insert", method=RequestMethod.POST)
 	@ResponseBody
 	public int insertEmp(@RequestBody Employee emp){
-		//System.out.println(emp.getAge()+" "+emp.getEmpId()+" "+emp.getEmpName());
+		
+		System.out.println(emp.getAddress().getCity());
 		return employeeService.insert(emp);
 		
 		
